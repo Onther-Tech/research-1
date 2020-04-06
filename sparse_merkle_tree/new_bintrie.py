@@ -2,12 +2,16 @@ from ethereum.utils import sha3, encode_hex
 
 class EphemDB():
     def __init__(self, kv=None):
+        self.reads = 0
+        self.writes = 0
         self.kv = kv or {}
 
     def get(self, k):
+        self.reads += 1
         return self.kv.get(k, None)
 
     def put(self, k, v):
+        self.writes += 1
         self.kv[k] = v
 
     def delete(self, k):
